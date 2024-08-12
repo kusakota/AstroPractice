@@ -4,34 +4,45 @@ import Hamb from "../molecules/hamb.vue";
 
 <header>
     <nav>
-        <ul>
+        <ul class="nav__menu">
             <li>
-                <a class="nav__menu" href="/practice/" @click="closeMenu">
+                <a class="nav__link" href="/practice/">
                     メニュー１
                 </a>
             </li>
             <li>
-                <a class="nav__menu" href="/practice/" @click="closeMenu">
+                <a class="nav__link" href="/practice/" >
                     メニュー２
                 </a>
             </li>
             <li>
-                <a class="nav__menu" href="/practice/" @click="closeMenu">
+                <a class="nav__link" href="/practice/" >
                     メニュー３
                 </a>
             </li>
         </ul>
     </nav>
-    <Hamb />
+    <Hamb client:load />
 </header>
 
 <style lang="scss" scoped>
-ul{
+.nav{
+    &__menu{
+        display: flex;
+        list-style-type: none;
+        gap: 1.5rem;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        text-decoration: none;
+    }
+}
+
+header{
     display: flex;
-    list-style-type: none;
-    gap: 1.5rem;
+    gap: 4rem;
     align-items: center;
-    padding: 0;
-    margin: 0;
+    z-index: 100;
+    background-color: #d9d9d9;
 }
 </style>
