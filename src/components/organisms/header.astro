@@ -1,0 +1,48 @@
+---
+import Hamb from "../molecules/hamb.vue";
+---
+
+<header>
+    <nav>
+        <ul class="nav__menu">
+            <li>
+                <a class="nav__link" href="/practice/">
+                    メニュー１
+                </a>
+            </li>
+            <li>
+                <a class="nav__link" href="/practice/" >
+                    メニュー２
+                </a>
+            </li>
+            <li>
+                <a class="nav__link" href="/practice/" >
+                    メニュー３
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <Hamb client:load />
+</header>
+
+<style lang="scss" scoped>
+.nav{
+    &__menu{
+        display: flex;
+        list-style-type: none;
+        gap: 1.5rem;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        text-decoration: none;
+    }
+}
+
+header{
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+    z-index: 100;
+    background-color: #d9d9d9;
+}
+</style>
