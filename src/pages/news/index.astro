@@ -1,0 +1,45 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+const newsCollection = await getCollection("news");
+
+// ニュースが存在するかどうか確認
+const isNewsExist = Array.isArray(newsCollection) && newsCollection.length >= 1;
+
+// ニュースを公開日でソート
+const news = isNewsExist
+  ? newsCollection.sort((a, b) => (a.data.publishedDate > b.data.publishedDate ? -1 : 1)) // 公開日の新しい順にソート
+  : [];
+
+interface Props {
+  title: string;
+  description: string;
+  pageType?: "website" | "article";
+  image: string;
+  imageAlt: string;
+}
+const head: Props = {
+  title: "最新ニュース",
+  description: "最新のニュースをお届け！",
+  pageType: "article",
+  image: "/path/to/image.jpg",
+  imageAlt: "Sample Image Alt Text"
+};
+
+---
+<Layout {...head}>
+<h1>最新ニュース</h1>
+    <ul>
+        {news.length >= 1 ? (
+        news.map((newsEntry) => (
+            <li>
+            <a href={`/news/${newsEntry.slug}`}>{newsEntry.data.title}</a>
+            <p>{new Date(newsEntry.data.publishedDate).toLocaleDateString()}</p>
+            </li>
+        ))
+        ) : (
+        <p>ニュースはありません</p>
+        )}
+    </ul>
+</Layout>

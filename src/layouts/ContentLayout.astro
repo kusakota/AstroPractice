@@ -1,0 +1,28 @@
+---
+interface Props {
+	title: string;
+	description: string;
+	image: string
+	imageAlt: string
+}
+
+const head: Props = Astro.props;
+
+import BaseMeta from '../components/BaseMeta.astro';
+import Header from '../components/organisms/header.astro';
+import "../styles/reset.scss";
+---
+
+<!Doctype html>
+<html lang="ja">
+	<head>
+		<BaseMeta {...head} pageType="article"/>
+	</head>
+	<body>
+		<Header />
+		<article>
+            <slot />
+        </article>
+	</body>
+</html>
+
