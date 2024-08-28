@@ -1,6 +1,7 @@
 ---
 title: Astro始めました
 publishedDate: 2024-08-28
+author: me
 ---
 # Astro始めました
 

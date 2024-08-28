@@ -1,6 +1,7 @@
 ---
 title: 慣れるまでが難しい
 publishedDate: 2024-08-28
+author: me
 ---
 # news2
 

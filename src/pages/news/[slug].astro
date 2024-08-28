@@ -13,7 +13,7 @@ if (!newsEntry) {
   throw new Error('News article not found');
 }
 
-const { title, publishedDate,} = newsEntry.data;
+const { title, publishedDate, author} = newsEntry.data;
 
 export async function getStaticPaths() {
   const newsCollection = await getCollection("news");
