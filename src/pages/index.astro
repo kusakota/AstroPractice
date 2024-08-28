@@ -1,11 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
+interface Props {
+  title: string;
+  description: string;
+  pageType?: "website" | "article";
+  image: string;
+  imageAlt: string;
+}
+
+const head: Props = {
+  title: "Sample Title",
+  description: "Sample Description",
+  pageType: "website",
+  image: "/path/to/image.jpg",
+  imageAlt: "Sample Image Alt Text"
+};
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-	</main>
+<Layout {...head}>
 </Layout>
-
-
