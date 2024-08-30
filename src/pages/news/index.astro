@@ -7,9 +7,9 @@ const newsCollection = await getCollection("news");
 // ニュースが存在するかどうか確認
 const isNewsExist = Array.isArray(newsCollection) && newsCollection.length >= 1;
 
-// ニュースを公開日でソート
+// ニュースを公開日の新しい順にソート
 const news = isNewsExist
-  ? newsCollection.sort((a, b) => (a.data.publishedDate > b.data.publishedDate ? -1 : 1)) // 公開日の新しい順にソート
+  ? newsCollection.sort((a, b) => (a.data.number > b.data.number ? -1 : 1)) 
   : [];
 
 interface Props {
@@ -33,9 +33,13 @@ const head: Props = {
     <ul>
         {news.length >= 1 ? (
         news.map((newsEntry) => (
-            <li>
+            <li class="news__contents">
             <a href={`/news/${newsEntry.slug}`}>{newsEntry.data.title}</a>
-            <p>{new Date(newsEntry.data.publishedDate).toLocaleDateString()}</p>
+            <div class="news__description">
+              <p>{new Date(newsEntry.data.publishedDate).toLocaleDateString()}</p>
+              <p>著者: {newsEntry.data.author}</p>
+              <p>ニュース番号：{newsEntry.data.number}</p>
+            </div>
             </li>
         ))
         ) : (
@@ -49,10 +53,15 @@ h1{
   margin-bottom: 1rem;
 }
 
-li{
-  margin: 1rem;
-  p{
+.news{
+  &__contents{
+    margin: 1rem;
+  }
+
+  &__description{
     color: rgba($black, 0.8);
+    display: flex;
+    gap: 1rem;
   }
 }
 

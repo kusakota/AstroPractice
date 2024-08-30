@@ -2,8 +2,8 @@
 title: 慣れるまでが難しい
 publishedDate: 2024-08-28
 author: me
+number: 2
 ---
-# news2
 
 ## Astro慣れるまでが難しい
 

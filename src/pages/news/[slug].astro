@@ -13,7 +13,7 @@ if (!newsEntry) {
   throw new Error('News article not found');
 }
 
-const { title, publishedDate, author} = newsEntry.data;
+const { title, publishedDate, author, number} = newsEntry.data;
 
 export async function getStaticPaths() {
   const newsCollection = await getCollection("news");
@@ -26,10 +26,19 @@ export async function getStaticPaths() {
 const { Content } = await newsEntry.render();
 ---
 <ContentLayout 
-    title= {title},
-	description="ニュース",
-	image= "/path/to/image.jpg",
-	imageAlt= "Sample Image Alt Text"
+  title= {title},
+  description="ニュース",
+  image= "/path/to/image.jpg",
+  imageAlt= "Sample Image Alt Text"
 >
+  <p>News {number}</p>
+  <h1>{title}</h1>
     <Content />
+    
 </ContentLayout>
+
+<style lang="scss" scoped>
+h1{
+  font-size: 32px;
+}
+</style>

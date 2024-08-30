@@ -3,6 +3,11 @@
     <nav class="hamb__nav" >
       <ul class="hamb__menu">
         <li class="hamb__panel">
+          <a class="hamb__panel__visble" href="/news/" @click="closeMenu">
+            <span class="hamb__panel__text">ニュース</span>
+          </a>
+        </li>
+        <li class="hamb__panel">
           <a class="hamb__panel__visble" href="/practice/" @click="closeMenu">
             <span class="hamb__panel__text">メニュー１</span>
           </a>
@@ -10,11 +15,6 @@
         <li class="hamb__panel">
           <a class="hamb__panel__visble" href="/practice/" @click="closeMenu">
             <span class="hamb__panel__text">メニュー２</span>
-          </a>
-        </li>
-        <li class="hamb__panel">
-          <a class="hamb__panel__visble" href="/practice/" @click="closeMenu">
-            <span class="hamb__panel__text">メニュー３</span>
           </a>
         </li>
       </ul> 

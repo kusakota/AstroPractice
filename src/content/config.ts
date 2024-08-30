@@ -1,3 +1,4 @@
+import { number } from "astro/zod";
 import { z, defineCollection } from "astro:content";
 
 const news = defineCollection({
@@ -6,6 +7,7 @@ const news = defineCollection({
       title: z.string(),
       publishedDate: z.date(),
       author: z.string(),
+      number: z.number(),
     }),
   });
 
