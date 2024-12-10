@@ -1,0 +1,38 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const list = [
+    {
+        Name: "あ",
+        content: "あ行"
+    },
+    {
+        Name: "い",
+        content: "あ行"
+    },
+    {
+        Name: "か",
+        content: "か行"
+    },
+]
+---
+
+<Layout 
+	title= "Sample Title",
+	description="Sample Description",
+	pageType="article",
+	image= "/path/to/image.jpg",
+	imageAlt= "Sample Image Alt Text"
+>
+<div class="list">
+    <ul class="list__content">
+        {list.map((list)=>(
+            <li class="lists">
+                <p>{list.content}</p>
+            </li>
+        )
+
+        )}
+    </ul>
+</div>
+</Layout>
