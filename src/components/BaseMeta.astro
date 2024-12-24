@@ -38,3 +38,16 @@ const {
 <meta name="twitter:title" content={title}>  <!--ページタイトル -->
 <meta name="twitter:description" content={description}> <!--ページ説明文 -->
 <meta name="twitter:image" content={image}> <!--Twitterカードの画像 -->
+
+<!-- Google tag (gtag.js) -->
+<script
+  type="text/partytown"
+  async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+></script>
+<script type="text/partytown">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
