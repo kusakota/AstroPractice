@@ -9,10 +9,7 @@ export default defineConfig({
                 scss: {
                 // importしたいファイルを記載 
                     //api: 'modern-compiler',
-                    additionalData: `
-                        @use "src/styles/_mixin.scss" as *;
-                        @use "src/styles/_variables" as *;
-                    `,
+                    additionalData: `@use "/src/styles/_mixin.scss" as *; @use "/src/styles/_variables" as *;`,
                 }
             }
         }

@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 
+// ニュースのコレクションを取得
 const newsCollection = await getCollection("news");
 
 // ニュースが存在するかどうか確認
@@ -19,6 +20,7 @@ interface Props {
   image: string;
   imageAlt: string;
 }
+
 const head: Props = {
   title: "最新ニュース",
   description: "最新のニュースをお届け！",
@@ -26,43 +28,41 @@ const head: Props = {
   image: "/path/to/image.jpg",
   imageAlt: "Sample Image Alt Text"
 };
-
 ---
 <Layout {...head}>
-<h1>最新ニュース</h1>
-    <ul>
-        {news.length >= 1 ? (
-        news.map((newsEntry) => (
-            <li class="news__contents">
-            <a href={`/news/${newsEntry.slug}`}>{newsEntry.data.title}</a>
-            <div class="news__description">
-              <p>{new Date(newsEntry.data.publishedDate).toLocaleDateString()}</p>
-              <p>著者: {newsEntry.data.author}</p>
-              <p>ニュース番号：{newsEntry.data.number}</p>
-            </div>
-            </li>
-        ))
-        ) : (
-        <p>ニュースはありません</p>
-        )}
-    </ul>
+  <h1>最新ニュース</h1>
+  <ul>
+    {news.length >= 1 ? (
+      news.map((newsEntry) => (
+        <li class="news__contents">
+          <a href={`/news/${newsEntry.id}/`}>{newsEntry.data.title}</a>
+          <div class="news__description">
+            <p>{new Date(newsEntry.data.publishedDate).toLocaleDateString()}</p>
+            <p>著者: {newsEntry.data.author}</p>
+            <p>ニュース番号：{newsEntry.data.number}</p>
+          </div>
+        </li>
+      ))
+    ) : (
+      <p>ニュースはありません</p>
+    )}
+  </ul>
 </Layout>
 
 <style lang="scss" scoped>
-h1{
+h1 {
   margin-bottom: 1rem;
 }
 
-.news{
-  &__contents{
+.news {
+  &__contents {
     margin: 1rem;
   }
 
-  &__description{
-    color: rgba($black, 0.8);
+  &__description {
+    color: rgba(0, 0, 0, 0.8);
     display: flex;
     gap: 1rem;
   }
 }
-
 </style>
