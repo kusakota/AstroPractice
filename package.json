@@ -19,7 +19,7 @@
     "yarn": "^1.22.22"
   },
   "devDependencies": {
-    "sass": "^1.77.8"
+    "sass": "^1.83.0"
   },
   "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
 }

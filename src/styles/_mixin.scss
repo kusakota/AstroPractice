@@ -1,14 +1,14 @@
+@use 'sass:map'; //mapモジュールの読み込み
+
 // breakpoint
 $grid-breakpoints: (
-
-xs: 0,
-sm: 576px,
-md: 720px,
-mn: 769px,
-// md: 768.2px,
-lg: 1080px,
-xl: 1280px,
-wd: 1500px,
+  xs: 0,
+  sm: 576px,
+  md: 720px,
+  // md: 768.2px,
+  lg: 1080px,
+  xl: 1280px,
+  wd: 1500px,
 );
 
 // @import '/assets/style/bootstrap/_breakpoints';
@@ -42,7 +42,7 @@ wd: 1500px,
 //    >> breakpoint-min(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 //    576px
 @function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
-  $min: map-get($breakpoints, $name);
+  $min: map.get($breakpoints, $name);
   @return if($min != 0, $min, null);
 }
 
@@ -56,8 +56,8 @@ wd: 1500px,
 //    >> breakpoint-max(md, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 //    767.98px
 @function breakpoint-max($name, $breakpoints: $grid-breakpoints) {
-  $max: map-get($breakpoints, $name);
-  @return if($max and $max > 0, $max - .02, null);
+  $max: map.get($breakpoints, $name);
+  @return if($max and $max > 0, $max - 0.02, null);
 }
 
 // Returns a blank string if smallest breakpoint, otherwise returns the name with a dash in front.
@@ -68,7 +68,7 @@ wd: 1500px,
 //    >> breakpoint-infix(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 //    "-sm"
 @function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
-  @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
+  @return if(breakpoint-min($name, $breakpoints) == null, '', '-#{$name}');
 }
 
 // Media of at least the minimum breakpoint width. No query for the smallest breakpoint.
@@ -122,9 +122,9 @@ wd: 1500px,
 // No minimum for the smallest breakpoint, and no maximum for the largest one.
 // Makes the @content apply only to the given breakpoint, not viewports any wider or narrower.
 @mixin media-breakpoint-only($name, $breakpoints: $grid-breakpoints) {
-  $min:  breakpoint-min($name, $breakpoints);
+  $min: breakpoint-min($name, $breakpoints);
   $next: breakpoint-next($name, $breakpoints);
-  $max:  breakpoint-max($next);
+  $max: breakpoint-max($next);
 
   @if $min != null and $max != null {
     @media (min-width: $min) and (max-width: $max) {
