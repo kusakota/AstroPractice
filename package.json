@@ -15,7 +15,8 @@
     "@astrojs/vue": "^4.5.0",
     "astro": "^4.13.1",
     "typescript": "^5.5.4",
-    "vue": "^3.4.37"
+    "vue": "^3.4.37",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "sass": "^1.77.8"
