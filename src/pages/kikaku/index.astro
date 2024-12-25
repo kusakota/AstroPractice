@@ -9,8 +9,8 @@ interface Props {
   imageAlt: string;
 }
 const head: Props = {
-  title: "最新ニュース",
-  description: "最新のニュースをお届け！",
+  title: "企画一覧",
+  description: "行きたい企画を探そう",
   pageType: "article",
   image: "/path/to/image.jpg",
   imageAlt: "Sample Image Alt Text"
@@ -22,7 +22,7 @@ const head: Props = {
   <ul>
     {kikakuList.map((kikaku) => (
       <li>
-        <a href={`/kikaku/${kikaku.kikaku_id}/`}>{kikaku.name}</a>
+        <a href={`/kikaku/${kikaku.project_id}/`}>{kikaku.name}</a>
       </li>
     ))}
   </ul>

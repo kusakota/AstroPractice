@@ -6,7 +6,7 @@ import kikakuList from "../../kikaku/kikakuList.json";
 export async function getStaticPaths() {
   // パスリストを配列として返す
   return kikakuList.map((kikaku) => ({
-    params: { slug: kikaku.kikaku_id.toString() }, // パラメータを文字列として登録
+    params: { slug: kikaku.project_id.toString() }, // パラメータを文字列として登録
   }));
 }
 
@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 
 // `slug` に基づいてデータを取得
-const kikaku = kikakuList.find( item => parseInt(slug, 10) === item.kikaku_id );
+const kikaku = kikakuList.find( item => parseInt(slug, 10) === item.project_id );
 
 if (!kikaku) {
   throw new Error(`企画 ID "${slug}" が見つかりません。`);
