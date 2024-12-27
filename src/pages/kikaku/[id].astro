@@ -1,0 +1,48 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import kikakuList from "../../content/kikaku/kikakuList.json";
+
+// getStaticPaths で動的ルートを設定
+export async function getStaticPaths() {
+  // パスリストを配列として返す
+  return kikakuList.map((kikaku) => ({
+    params: { id: kikaku.project_id.toString() }, // パラメータを文字列として登録
+  }));
+}
+
+// 現在のページのパラメータを取得
+const { id } = Astro.params;
+
+// `slug` に基づいてデータを取得
+const kikaku = kikakuList.find( item => item.project_id === parseInt(id, 10));
+
+if (!kikaku) {
+  throw new Error(`企画 ID "${id}" が見つかりません。`);
+}
+
+interface Props {
+  title: string;
+  description: string;
+  pageType?: "website" | "article";
+  image: string;
+  imageAlt: string;
+}
+
+const head: Props = {
+  title: kikaku.name,
+  description: "企画詳細",
+  pageType: "article",
+  image: "/path/to/image.jpg", // 必要に応じて画像パスを更新
+  imageAlt: "Sample Image Alt Text"
+};
+---
+
+<Layout {...head}>
+  <h1>{kikaku.name}</h1>
+  <p>ジャンル: {kikaku.genre}</p>
+  <ul>
+    <li>場所: {kikaku.place}</li>
+    <li>エリア: {kikaku.area}</li>
+    <li>開催日: {kikaku.date === "double" ? "両日" : kikaku.date === "day1" ? "1日目" : "2日目"}</li>
+  </ul>
+</Layout>
