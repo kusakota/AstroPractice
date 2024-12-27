@@ -8,9 +8,10 @@ export default defineConfig({
             preprocessorOptions: {
                 scss: {
                 // importしたいファイルを記載 
-                additionalData: `@import "src/styles/_mixin.scss","src/styles/_variables";`
+                    //api: 'modern-compiler',
+                    additionalData: `@use "/src/styles/_mixin.scss" as *; @use "/src/styles/_variables" as *;`,
+                }
             }
-          }
         }
     },
     trailingSlash: 'always',

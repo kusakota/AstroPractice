@@ -1,0 +1,38 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import kikakuList from "../../content/kikaku/kikakuList.json";
+
+interface Props {
+  title: string;
+  description: string;
+  pageType?: "website" | "article";
+  image: string;
+  imageAlt: string;
+}
+
+const head: Props = {
+  title: "企画一覧",
+  description: "行きたい企画を探そう",
+  pageType: "article",
+  image: "/path/to/image.jpg",
+  imageAlt: "Sample Image Alt Text"
+};
+---
+
+<Layout {...head}>
+  <h1>企画一覧</h1>
+    <ul>
+      {kikakuList.map((kikaku) => (
+        <li>
+          <a href={`/kikaku/${kikaku.project_id.toString()}/`}>{kikaku.name}</a>
+        </li>
+      ))}
+    </ul>
+</Layout>
+<style lang="scss" scoped>
+  ul{
+      li{
+          margin: 12px;
+      }
+  }
+</style>
