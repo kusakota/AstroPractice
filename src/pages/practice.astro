@@ -1,8 +1,8 @@
 ---
+import FontAwesomeIcon from "../components/atoms/FontAwesomeIcon.astro";
+import { faAngleRight, faHouse} from "@fortawesome/free-solid-svg-icons";
 import Layout from "../layouts/Layout.astro";
-
 ---
-
 <Layout 
 	title= "Sample Title",
 	description="Sample Description",
@@ -13,4 +13,14 @@ import Layout from "../layouts/Layout.astro";
 	<h1>
 		Hello World
 	</h1>
+	<span class="icon">
+		<FontAwesomeIcon icon={faAngleRight} />
+	</span>
+	<FontAwesomeIcon icon={faHouse} />
 </Layout>
+<style lang="scss" scoped>
+.icon{
+	color: red;
+	font-size: 64px;
+}
+</style>

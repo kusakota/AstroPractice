@@ -33,24 +33,6 @@ const closeMenu = () => {
   emit('closeMenu');
 }
 </script>
-<!--
-<script>
-export default {
-  data() {
-    return {
-      hambflag: false,
-      scrollableflag: false,
-    }
-  },
-  methods: {
-    closeMenu() {
-      this.$emit('closeMenu')
-      this.toggleScroll(true)
-    },
-  }
-}
-</script>
--->
 <style lang='scss' scoped>
 .hamb{
   &__nav{
