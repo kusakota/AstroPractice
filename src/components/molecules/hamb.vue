@@ -12,8 +12,6 @@
         <HambMenu class="hamb__menu" v-show="hambflag" @closeMenu="hambchange"/>
     </Transition>
 </template>
-
-
 <script setup>
 import { ref } from 'vue';
 import HambMenu from "../atoms/HambMenu.vue";
@@ -45,44 +43,7 @@ const scrollControl =(event) => {
       event.preventDefault();
 }
 </script>
-<!--
-<script>
-export default {
-  data() {
-    return {
-      hambflag: false,
-      scrollableflag: false,
-    }
-  },
-  methods: {
-    hambchange() {
-      this.hambflag = !this.hambflag
-      this.toggleScroll(!this.hambflag)
-      return this.hambflag
-    },
-    closeMenu() {
-      this.hambflag = false
-      this.toggleScroll(true)
-      return this.hambflag
-    },
-    toggleScroll(enable) {
-      if (!enable) {
-        document.addEventListener("mousewheel", this.scrollControl, { passive: false });
-        document.addEventListener("touchmove", this.scrollControl, { passive: false });
-      } else {
-        document.removeEventListener("mousewheel", this.scrollControl, { passive: false });
-        document.removeEventListener("touchmove", this.scrollControl, { passive: false });
-      }
-    },
-    scrollControl(event) {
-      event.preventDefault();
-    },
-  }
-}
-</script>
--->
 <style lang="scss" scoped>
-
 .link{
   text-decoration: none;
   font-size: 17.2px;
@@ -103,7 +64,6 @@ li {
   padding: 20px 0 8px 0;
   width: fit-content;
 }
-
 .hamb{
   &__button{
     z-index: calc(infinity);
@@ -118,7 +78,6 @@ li {
     border: none;
     z-index: 200;
   }
-
   &__line{
     position: absolute;
     top: 0;
@@ -140,7 +99,6 @@ li {
       transition: 0.4s ease;
     }
   }
-
   &__menu{
     position: fixed;
     top: 52px;
@@ -151,25 +109,20 @@ li {
     overflow-y: auto;
   }
 }
-
 .v-enter-to {
   transition: transform 0.3s ease-out;
   transform: translateX(0px);
 }
-
 .v-enter-from {
   transform: translateY(calc(-100vh + 57.5px));
 }
-
 .v-leave-to {
   transition: transform 0.3s ease-out;
   transform: translateY(calc(-100vh + 57.5px));
 }
-
 .v-leave-from {
   transform: translateY(57.5px);
 }
-
 .v-line01 {
   transform: translateY(10px) rotate(-45deg);
   transition: 0.4s ease;
