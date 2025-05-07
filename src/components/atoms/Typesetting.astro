@@ -1,0 +1,120 @@
+---
+const charClasses: { [key in string]: string[] } = {
+  opening: ['「', '『', '（', '［', '〈', '｛'],
+  closing: ['」', '』', '）', '］', '〉', '｝'],
+  comma: ['、', '。'],
+  space: [' '],
+  middleDot: ['・'],
+  tab: ['\t'],
+};
+---
+
+<span class="typesetting">
+  <slot />
+</span>
+
+<script>
+  // クライアントサイドでテキスト整形を行う
+  function initTypesetting() {
+    const typesettingElements = document.querySelectorAll('.typesetting');
+    
+    typesettingElements.forEach(element => {
+      const originalText = element.textContent || '';
+      element.innerHTML = ''; // 内容をクリア
+      
+      const lines = originalText.split('\n');
+      
+      lines.forEach((line, lineIndex) => {
+        const nodes = typeset(line, lineIndex);
+        
+        nodes.forEach(node => {
+          const span = document.createElement('span');
+          span.className = node.class;
+          span.textContent = node.text;
+          element.appendChild(span);
+        });
+        
+        if (lineIndex < lines.length - 1) {
+          element.appendChild(document.createElement('br'));
+        }
+      });
+    });
+    
+    function getCharClass(char: string) {
+      const charClasses = {
+        opening: ['「', '『', '（', '［', '〈', '｛'],
+        closing: ['」', '』', '）', '］', '〉', '｝'],
+        comma: ['、', '。'],
+        space: [' '],
+        middleDot: ['・'],
+        tab: ['\t'],
+      };
+      
+      if (char.match(/^[A-Za-z0-9.,!?&@/:\-\(\)\*]*$/)) {
+        return 'latin';
+      }
+      
+      for (const [key, chars] of Object.entries(charClasses)) {
+        if (chars.includes(char)) {
+          return key;
+        }
+      }
+      
+      return 'others';
+    }
+    
+    function typeset(line: string, lineIndex: number) {
+      const nodes: { class: string; text: string; key: string }[] = [];
+      let tempChars = '';
+      let currentCharClass = 'head';
+      let index = 0;
+      
+      const addChars = () => {
+        if (tempChars.length > 0) {
+          nodes.push({
+            class: currentCharClass,
+            text: tempChars,
+            key: `line${lineIndex}-${index++}`
+          });
+        }
+      };
+      
+      for (const char of line) {
+        const charClass = getCharClass(char);
+        if (['space', 'tab'].includes(charClass)) {
+          if (['comma', 'space', 'tab', 'head'].includes(currentCharClass)) {
+            continue;
+          }
+        }
+        if (charClass !== currentCharClass || ['opening', 'closing'].includes(charClass)) {
+          addChars();
+          tempChars = '';
+        }
+        tempChars += char;
+        currentCharClass = charClass;
+      }
+      addChars();
+      return nodes;
+    }
+  }
+  
+  // ページ読み込み時に実行
+  document.addEventListener('DOMContentLoaded', initTypesetting);
+</script>
+
+<style>
+  .typesetting {
+    font-family: 'ryo-gothic-plusn';
+  }
+  
+  .latin {
+    font-family: 'brother-1816', sans-serif;
+    font-weight: 300;
+    font-size: 1.06em;
+  }
+  
+  .others + .latin,
+  .latin + .others {
+    padding-left: 0.25em;
+  }
+</style>
