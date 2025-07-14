@@ -1,11 +1,20 @@
 ---
-title: NuxtとAstro
+title: フォント(font)って沼だよね！
 publishedDate: 2024-08-30
 author: me
 number: 3
 ---
 
-## NuxtとAstro
-Nuxt(Vue)とAstroの技術選定において、初期学習コストの面に関してはほぼ等しいと考えれれる。しかしながら、JavaScriptの書き方を考えると、Nuxt(Vue)とAstroではNuxt(Vue)の方に対して軍配は上がるのではないかと筆者は考える。
+## フォント(font)って沼だよね！
+フォントって沼だよね。（疲れた）(12)
 
+fontって沼だよね。
+
+(font)
+
+（火）
+
+(火)
+
+和文フォント(並列)
 ### どちらがいいのか

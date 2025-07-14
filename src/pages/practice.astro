@@ -2,6 +2,7 @@
 import FontAwesomeIcon from "../components/atoms/FontAwesomeIcon.astro";
 import { faAngleRight, faHouse} from "@fortawesome/free-solid-svg-icons";
 import Layout from "../layouts/Layout.astro";
+import Typesetting from "../components/atoms/Typesetting.astro";
 ---
 <Layout 
 	title= "Sample Title",
@@ -16,11 +17,25 @@ import Layout from "../layouts/Layout.astro";
 	<span class="icon">
 		<FontAwesomeIcon icon={faAngleRight} />
 	</span>
+  <section >
+    <h2>見出し</h2>
+    <p class="text">
+    <Typesetting>
+      「彼は言った。『文字組みは美しさと可読性のバランスが重要だ』。」、（12時間）は
+    </Typesetting>
+    </p>
+    <div class="text">
+      「彼は言った。『文字組みは美しさと可読性のバランスが重要だ』。」、（12時間）は
+    </div>
 	<FontAwesomeIcon icon={faHouse} />
 </Layout>
 <style lang="scss" scoped>
 .icon{
 	color: red;
 	font-size: 64px;
+}
+.text{
+  width: 520px;
+  font-family: 'ryo-gothic-plusn';
 }
 </style>
