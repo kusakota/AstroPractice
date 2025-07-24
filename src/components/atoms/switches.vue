@@ -5,20 +5,23 @@ const props = defineProps<{ modelValue: string }>();
 const emit = defineEmits(['update:modelValue']);
 
 const zoomLevel = ref(props.modelValue ?? '100');
+const inputValue = ref(zoomLevel.value); // 入力用のref
 
-const maxZoom = 300; // 最大倍率
-const minZoom = 100; // 最小倍率
-const step = 25; // ズームステップ
+const maxZoom = 300;
+const minZoom = 100;
+const step = 25;
 
 // modelValueが変化したらzoomLevelも更新
 watch(() => props.modelValue, (val) => {
   zoomLevel.value = val;
+  inputValue.value = val;
 });
 
 // zoomLevelが変化したら親に通知
 watch(zoomLevel, (val) => {
   emit('update:modelValue', val);
 });
+
 const normalizeZoom = (val: string | number) => {
   let num = Number(val);
   if (isNaN(num) || val === '') return 100;
@@ -35,6 +38,7 @@ const zoomIn = () => {
     num = maxZoom;
   }
   zoomLevel.value = String(num);
+  inputValue.value = zoomLevel.value;
 };
 
 const zoomOut = () => {
@@ -45,10 +49,12 @@ const zoomOut = () => {
     num = minZoom;
   }
   zoomLevel.value = String(num);
+  inputValue.value = zoomLevel.value;
 };
 
 function onInputBlur() {
-  zoomLevel.value = String(normalizeZoom(zoomLevel.value));
+  zoomLevel.value = String(normalizeZoom(inputValue.value));
+  inputValue.value = zoomLevel.value;
 }
 
 // Enterキーでblurを実行
@@ -65,9 +71,9 @@ function onInputKeydown(e: KeyboardEvent) {
       <button
         id="zoomOutBtn"
         class="zoom-btn zoom-out"
-        :class="{ 'zoom-out-disabled': Number(zoomLevel) <= 100 }"
+        :class="{ 'zoom-out-disabled': Number(zoomLevel) <= minZoom }"
         @click="zoomOut"
-        :disabled="Number(zoomLevel) <= 100"
+        :disabled="Number(zoomLevel) <= minZoom"
       >
         <span class="icon">ー</span>
       </button>
@@ -76,7 +82,7 @@ function onInputKeydown(e: KeyboardEvent) {
           type="text"
           class="zoom-level"
           id="zoomLevelInput"
-          v-model="zoomLevel"
+          v-model="inputValue"
           @blur="onInputBlur"
           @keydown="onInputKeydown"
         />
@@ -86,7 +92,7 @@ function onInputKeydown(e: KeyboardEvent) {
         id="zoomInBtn"
         class="zoom-btn zoom-in"
         @click="zoomIn"
-        :disabled="Number(zoomLevel) >= 300"
+        :disabled="Number(zoomLevel) >= maxZoom"
       >
         <span class="icon">＋</span>
       </button>
