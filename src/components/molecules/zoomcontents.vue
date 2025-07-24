@@ -16,19 +16,10 @@ const zoomLevel = ref('100');
 </template>
 
 <style lang="scss">
-  .contents {
-    padding: 20px;
-    overflow: auto;
-  }
-  
   .contents__wrapper {
-    background: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    padding: 20px;
     transform-origin: top center;
     margin: 20px auto 0;
-    max-width: 600px;
+    max-width: 450px;
     display: block;
   }
 </style>
