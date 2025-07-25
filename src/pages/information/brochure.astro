@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Zoomcontent from "../../components/molecules/zoomcontents.vue";
+import Zoomcontent from "../../components/organisms/zoomcontents.vue";
+import BrochureContents from "../../components/molecules/brochureContents.vue";
 ---
 <Layout 
     title= "Sample Title",
@@ -9,5 +10,10 @@ import Zoomcontent from "../../components/molecules/zoomcontents.vue";
     image= "/path/to/image.jpg",
     imageAlt= "Sample Image Alt Text"
 >
-<Zoomcontent  client:load/>
+<Zoomcontent  client:load>
+  <!-- Example of a zoomable image 
+  <img src="/src/assets/images/seimon-md.webp" alt="Zoomable Image" class="zoom-image" />
+  -->
+  <BrochureContents/>
+</Zoomcontent>
 </Layout>
