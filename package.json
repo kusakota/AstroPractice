@@ -12,15 +12,20 @@
   "dependencies": {
     "@astrojs/check": "^0.9.1",
     "@astrojs/partytown": "^2.1.2",
-    "@astrojs/vue": "^4.5.0",
+    "@astrojs/vue": "^5.1.0",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "astro": "^5.1.1",
+    "satori": "^0.16.2",
+    "satori-html": "^0.3.2",
+    "sharp": "^0.34.3",
     "typescript": "^5.5.4",
+    "vite-plugin-arraybuffer": "^0.1.0",
     "vue": "^3.4.37",
     "yarn": "^1.22.22"
   },
   "devDependencies": {
+    "@types/node": "^24.3.0",
     "sass": "^1.83.0"
   },
   "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
