@@ -42,7 +42,7 @@ export const getStaticPaths: GetStaticPaths = () => {
  * propsを受け取り、画像を生成して返す
  */
 export const GET: APIRoute = async ({ props }) => {
-  if (!props.name) {
+  if (!props || !props.name) {
     return new Response("Not found", { status: 404 });
   }
   
