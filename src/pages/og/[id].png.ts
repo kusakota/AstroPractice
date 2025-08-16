@@ -1,87 +1,101 @@
+// src/pages/api/og/[id].ts のようなファイルパスを想定
+
 import type { APIRoute, GetStaticPaths } from "astro";
-import fs from "fs";
 import satori from "satori";
 import { html } from "satori-html";
 import sharp from "sharp";
+import { Buffer } from "buffer";
+import kikaku from "../../content/kikaku/kikakuList.json";
 
-const WIDTH = 1200;
-const HEIGHT = 630;
+// --- アセットの読み込み ---
+// 背景画像とフォントファイルをArrayBufferとしてインポートします
 
-// Google Fontsからフォントを非同期で取得
-async function getFontData() {
-  const response = await fetch(
-    "https://fonts.gstatic.com/s/notosansjp/v52/-F6pfjtqLzI2JPCgQBnw7HFq.woff2"
-  );
-  return response.arrayBuffer();
+import baseImageData from "../../assets/images/Rectangle7.png?arraybuffer";
+// Google FontsからNoto Sans JPのフォントデータを取得
+import fontData from "../../assets/fonts/noto-sans-jp-v54-japanese_latin-700.woff2?arraybuffer";
+
+//?arraybuffer
+/**
+ * ArrayBufferをバイナリ文字列に変換するヘルパー関数
+ * (btoaでBase64エンコードするために必要)
+ */
+function arrayBufferToBinaryString(arrayBuffer: ArrayBuffer): string {
+  let binaryString = "";
+  const bytes = new Uint8Array(arrayBuffer);
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binaryString += String.fromCharCode(bytes[i]);
+  }
+  return binaryString;
 }
 
-const fontDataPromise = getFontData();
+// 背景画像をBase64エンコードして、CSSで直接使えるようにしておく
+const baseImage = btoa(arrayBufferToBinaryString(baseImageData));
 
-// JSONファイルのパス
-const jsonPath = new URL("../../src/content/kikaku/kikakuList.json", import.meta.url);
-
-type Kikaku = {
-  project_id: number;
-  name: string;
-  description: string;
-  // 他に必要なプロパティがあれば追加
-};
-
+/**
+ * getStaticPaths: ビルド時に静的なパスを生成する
+ */
 export const getStaticPaths: GetStaticPaths = () => {
-  const kikakuList: Kikaku[] = JSON.parse(fs.readFileSync(jsonPath, "utf-8"));
-
-  return kikakuList.map((kikaku) => ({
-    params: { id: String(kikaku.project_id) },
+  return kikaku.map((project) => ({
+    params: { id: String(project.project_id) },
+    props: { name: project.name },
   }));
 };
 
-export const GET: APIRoute = async ({ params }) => {
-  const fontData = await fontDataPromise; // フォントデータを待つ
-  const { id } = params;
-
-  if (!id) {
-    return new Response("ID is required", { status: 400 });
+/**
+ * GET: APIエンドポイントの本体
+ * propsを受け取り、画像を生成して返す
+ */
+export const GET: APIRoute = async ({ props }) => {
+  if (!props.name) {
+    return new Response("Not found", { status: 404 });
   }
+  
+  // propsから受け取った企画名で画像を生成
+  const body = await generateOgImage(props.name);
 
-  const kikakuList: Kikaku[] = JSON.parse(fs.readFileSync(jsonPath, "utf-8"));
-  const kikaku = kikakuList.find((item) => String(item.project_id) === id);
-
-  if (!kikaku) {
-    return new Response("Not Found", { status: 404 });
-  }
-
-  const template = html`
-    <div
-      style="width: ${WIDTH}px; height: ${HEIGHT}px; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #f8f9fa; color: #343a40; font-family: 'Noto Sans JP'; padding: 60px;"
-    >
-      <h1 style="font-size: 72px; margin: 0; text-align: center; line-height: 1.2;">
-        ${kikaku.name}
-      </h1>
-      <p style="font-size: 36px; margin-top: 30px; text-align: center; line-height: 1.5; opacity: 0.8;">
-        ${kikaku.description}
-      </p>
-    </div>
-  `;
-
-  const svg = await satori(template, {
-    width: WIDTH,
-    height: HEIGHT,
-    fonts: [
-      {
-        name: "Noto Sans JP",
-        data: fontData,
-        weight: 400,
-        style: "normal",
-      },
-    ],
-  });
-
-  const pngBuffer = await sharp(Buffer.from(svg)).png().toBuffer();
-
-  return new Response(pngBuffer as any, {
-    status: 200,
+  // 生成したPNG画像をレスポンスとして返す
+  return new Response(new Uint8Array(body), {
     headers: {
       "Content-Type": "image/png",
     },
   });
 };
+
+/**
+ * 画像生成のコアロジック
+ * @param title 画像に埋め込むタイトル
+ * @returns PNG画像のBuffer
+ */
+async function generateOgImage(title: string): Promise<Buffer> {
+  // SatoriでHTML/CSSからSVGを生成
+  const svg = await satori(
+    html`
+      <div
+        style="display: flex; width: 1200px; height: 630px; background-size: 1200px 630px; background-image: url(data:image/png;base64,${baseImage});"
+      >
+        <div
+          style="display: flex; justify-content: center; align-items: center; text-align: center; width: 900px; height: 250px; position: absolute; left: 150px; top: 280px; padding: 20px;"
+        >
+          <p
+            style="color: #333; font-size: 60px; font-family: 'Noto Sans JP';"
+          >${title}</p>
+        </div>
+      </div>
+    `,
+    {
+      width: 1200,
+      height: 630,
+      fonts: [
+        {
+          name: "Noto Sans JP", // CSSで指定するフォント名
+          data: fontData,
+          weight: 400,
+          style: "normal",
+        },
+      ],
+    }
+  );
+  // SharpでSVGをPNGに変換
+  return await sharp(Buffer.from(svg)).png().toBuffer();
+}
