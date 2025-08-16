@@ -9,12 +9,9 @@ import kikaku from "../../content/kikaku/kikakuList.json";
 
 // --- アセットの読み込み ---
 // 背景画像とフォントファイルをArrayBufferとしてインポートします
-
 import baseImageData from "../../assets/images/Rectangle7.png?arraybuffer";
-// Google FontsからNoto Sans JPのフォントデータを取得
-import fontData from "../../assets/fonts/noto-sans-jp-v54-japanese_latin-700.woff2?arraybuffer";
+import fontData from "../../assets/fonts/noto-sans-jp-regular.otf?arraybuffer"
 
-//?arraybuffer
 /**
  * ArrayBufferをバイナリ文字列に変換するヘルパー関数
  * (btoaでBase64エンコードするために必要)
