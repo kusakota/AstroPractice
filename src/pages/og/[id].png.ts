@@ -8,7 +8,7 @@ import kikaku from "../../content/kikaku/kikakuList.json";
 // --- アセットの読み込み ---
 // 背景画像とフォントファイルをArrayBufferとしてインポートする
 import baseImageData from "../../assets/images/Rectangle7.png?arraybuffer";
-import fontData from "../../assets/fonts/noto-sans-jp-regular.otf?arraybuffer"
+import fontData from "../../assets/fonts/noto-sans-jp-regular.otf?arraybuffer";
 
 /**
  * ArrayBufferをバイナリ文字列に変換するヘルパー関数
