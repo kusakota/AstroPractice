@@ -1,14 +1,12 @@
-// src/pages/api/og/[id].ts のようなファイルパスを想定
-
+// src/pages/og/[id].ts のようなファイルパスを想定
 import type { APIRoute, GetStaticPaths } from "astro";
 import satori from "satori";
 import { html } from "satori-html";
 import sharp from "sharp";
-import { Buffer } from "buffer";
 import kikaku from "../../content/kikaku/kikakuList.json";
 
 // --- アセットの読み込み ---
-// 背景画像とフォントファイルをArrayBufferとしてインポートします
+// 背景画像とフォントファイルをArrayBufferとしてインポートする
 import baseImageData from "../../assets/images/Rectangle7.png?arraybuffer";
 import fontData from "../../assets/fonts/noto-sans-jp-regular.otf?arraybuffer"
 

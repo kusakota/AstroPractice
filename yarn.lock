@@ -4103,6 +4103,11 @@ vite-hot-client@^2.0.4:
   resolved "https://registry.npmjs.org/vite-hot-client/-/vite-hot-client-2.1.0.tgz"
   integrity sha512-7SpgZmU7R+dDnSmvXE1mfDtnHLHQSisdySVR7lO8ceAXvM0otZeuQQ6C8LrS5d/aYyP/QZ0hI0L+dIPrm4YlFQ==
 
+vite-plugin-arraybuffer@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-arraybuffer/-/vite-plugin-arraybuffer-0.1.0.tgz#275feb8a0163e83cac5be02a5a62cefee0cee0fd"
+  integrity sha512-AhUP3FzB5ftDKBT5QPluK0l+v64GHDa+nNv6ncEQfNeOnVIbbdkYY1sMfEs9ZuAL2AULbxP9pbE3t2qLwmLdYA==
+
 vite-plugin-inspect@0.8.9:
   version "0.8.9"
   resolved "https://registry.npmjs.org/vite-plugin-inspect/-/vite-plugin-inspect-0.8.9.tgz"
