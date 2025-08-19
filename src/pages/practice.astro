@@ -3,6 +3,12 @@ import FontAwesomeIcon from "../components/atoms/FontAwesomeIcon.astro";
 import { faAngleRight, faHouse} from "@fortawesome/free-solid-svg-icons";
 import Layout from "../layouts/Layout.astro";
 import Typesetting from "../components/atoms/Typesetting.astro";
+import BottomSheet from "../components/atoms/BottomSheet.vue";
+import { ref } from 'vue';
+
+// Vueコンポーネントの初期状態を管理
+// 'closed' または 'partial'
+const sheetState = ref('closed');
 ---
 <Layout 
 	title= "Sample Title",
@@ -27,6 +33,16 @@ import Typesetting from "../components/atoms/Typesetting.astro";
     <div class="text">
       「彼は言った。『文字組みは美しさと可読性のバランスが重要だ』。」、（12時間）は
     </div>
+		</section>
+		<BottomSheet client:load v-model={sheetState}>
+    <h2>メニュー</h2>
+    <p>ここにリストなどを表示できます。</p>
+    <ul>
+      <li>プロフィール</li>
+      <li>設定</li>
+      <li>ログアウト</li>
+    </ul>
+  </BottomSheet>
 	<FontAwesomeIcon icon={faHouse} />
 </Layout>
 <style lang="scss" scoped>
