@@ -139,7 +139,7 @@ function onPointerUp() {
 </script>
 
 <template>
-  <div class="bottom-sheet__wrapper shadow" :style="`transform: translate3d(0px, ${scrollY}px, 0px)`" @touchstart="onTouchStart" @mousedown="onMouseDown" @pointerdown="onPointerDown">
+  <div class="bottom-sheet__wrapper shadow" :style="`transform: translate3d(0px, ${scrollY}px, 0px)`" @pointerdown="onPointerDown">
       <div class="bottom-sheet__handle" >
         <div class="bottom-sheet__handle--bar" />
       </div>
