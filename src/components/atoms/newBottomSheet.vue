@@ -1,13 +1,24 @@
 <script setup>
 import { ref } from 'vue';
 
-// シート垂直位置
+// シートデフォルトの垂直位置
 const scrollY = ref(-800);
 // ドラッグ中の状態
 let startY = 0;
 let baseY = scrollY.value;
 let isDragging = false;
 
+const maxScrollY = 65;
+const minScrollY = -1100;
+
+/**
+ * onTouchStart: トッチドラッグ開始ハンドラ
+ * - isDragging を true に設定
+ * - ドラッグ開始位置 startY を記録
+ * - 現在の scrollY 位置を baseY に保持
+ * - touchmove と touchend リスナを登録
+ * @param {TouchEvent} event - タッチ開始イベント
+ */
 function onTouchStart(event) {
   isDragging = true;
   startY = event.touches[0].clientY;
@@ -16,17 +27,37 @@ function onTouchStart(event) {
   document.addEventListener('touchend', onTouchEnd);
 }
 
+/**
+ * onTouchMove: トッチドラッグ中の移動ハンドラ
+ * - isDragging が true の場合のみ動作
+ * - 移動量（event.touches[0].clientY - startY）を計算し scrollY を更新
+ * @param {TouchEvent} event - タッチ移動イベント
+ */
 function onTouchMove(event) {
   if (!isDragging) return;
   scrollY.value = baseY + (event.touches[0].clientY - startY);
 }
 
+/**
+ * onTouchEnd: トッチドラッグ終了ハンドラ
+ * - isDragging を false にリセット
+ * - touchmove と touchend リスナを解除
+ */
 function onTouchEnd() {
   isDragging = false;
+  // ドラッグ終了時にスクロール位置を範囲内にクランプ
+  scrollY.value = Math.min(maxScrollY, Math.max(minScrollY, scrollY.value));
   document.removeEventListener('touchmove', onTouchMove);
   document.removeEventListener('touchend', onTouchEnd);
 }
 
+/**
+ * onMouseDown: マウスドラッグ開始ハンドラ
+ * - isDragging を true に設定
+ * - ドラッグ開始位置 startY と baseY を記録
+ * - mousemove と mouseup リスナを登録
+ * @param {MouseEvent} event - マウスダウンイベント
+ */
 function onMouseDown(event) {
   isDragging = true;
   startY = event.clientY;
@@ -35,18 +66,38 @@ function onMouseDown(event) {
   document.addEventListener('mouseup', onMouseUp);
 }
 
+/**
+ * onMouseMove: マウスドラッグ中の移動ハンドラ
+ * - isDragging が true の場合のみ動作
+ * - 移動量（event.clientY - startY）を計算し scrollY を更新
+ * @param {MouseEvent} event - マウス移動イベント
+ */
 function onMouseMove(event) {
   if (!isDragging) return;
   scrollY.value = baseY + (event.clientY - startY);
 }
 
+/**
+ * onMouseUp: マウスドラッグ終了ハンドラ
+ * - isDragging を false にリセット
+ * - mousemove と mouseup リスナを解除
+ */
 function onMouseUp() {
   isDragging = false;
+  // ドラッグ終了時にスクロール位置を範囲内にクランプ
+  scrollY.value = Math.min(maxScrollY, Math.max(minScrollY, scrollY.value));
   document.removeEventListener('mousemove', onMouseMove);
   document.removeEventListener('mouseup', onMouseUp);
 }
 
 // --- ポインターイベントによる統合ドラッグ ---
+/**
+ * onPointerDown: ポインタ（タッチ/マウス）開始ハンドラ
+ * - デフォルト動作を抑止
+ * - isDragging, startY, baseY を初期化
+ * - pointermove と pointerup リスナを登録
+ * @param {PointerEvent} event - ポインタ開始イベント
+ */
 function onPointerDown(event) {
   event.preventDefault();
   isDragging = true;
@@ -56,13 +107,26 @@ function onPointerDown(event) {
   document.addEventListener('pointerup', onPointerUp);
 }
 
+/**
+ * onPointerMove: ポインタ移動ハンドラ
+ * - isDragging が true の場合のみ動作
+ * - 移動量（event.clientY - startY）を計算し scrollY を更新
+ * @param {PointerEvent} event - ポインタ移動イベント
+ */
 function onPointerMove(event) {
   if (!isDragging) return;
   scrollY.value = baseY + (event.clientY - startY);
 }
 
+/**
+ * onPointerUp: ポインタ終了ハンドラ
+ * - isDragging を false にリセット
+ * - pointermove と pointerup リスナを解除
+ */
 function onPointerUp() {
   isDragging = false;
+  // ドラッグ終了時にスクロール位置を範囲内にクランプ
+  scrollY.value = Math.min(maxScrollY, Math.max(minScrollY, scrollY.value));
   document.removeEventListener('pointermove', onPointerMove);
   document.removeEventListener('pointerup', onPointerUp);
 }
