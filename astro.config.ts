@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, sharpImageService } from 'astro/config';
 import vue from '@astrojs/vue';
 import partytown from "@astrojs/partytown";
 import arraybuffer from "vite-plugin-arraybuffer";
@@ -28,4 +28,7 @@ export default defineConfig({
     ], 
     site: 'https://kusakota.github.io',
     base: 'AstroPractice',
+    image: {
+      service: sharpImageService(),
+    },
 });
