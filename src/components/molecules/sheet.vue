@@ -5,7 +5,11 @@ const sheetState = ref('closed') // 'closed', 'partial', 'full'
 </script>
 
 <template>
-  <BottomSheet :state="sheetState">
+
+</script>
+
+<template>
+  <BottomSheet>
     <ul>
       <li>1</li>
       <li>2</li>
