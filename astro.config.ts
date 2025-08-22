@@ -25,5 +25,7 @@ export default defineConfig({
                 forward: ["dataLayer.push"],
             },
          }),
-    ],
+    ], 
+    site: 'https://kusakota.github.io',
+    base: 'AstroPractice',
 });

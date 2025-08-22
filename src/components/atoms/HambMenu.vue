@@ -3,22 +3,22 @@
     <nav class="hamb__nav" >
       <ul class="hamb__menu">
         <li class="hamb__panel">
-          <a class="hamb__panel__visble" href="/news/" @click="closeMenu">
+          <a class="hamb__panel__visble" href="/AstroPractice/news/" @click="closeMenu">
             <span class="hamb__panel__text">ニュース</span>
           </a>
         </li>
         <li class="hamb__panel">
-          <a class="hamb__panel__visble" href="/information/" @click="closeMenu">
+          <a class="hamb__panel__visble" href="/AstroPractice/information/" @click="closeMenu">
             <span class="hamb__panel__text">案内</span>
           </a>
         </li>
         <li class="hamb__panel">
-          <a class="hamb__panel__visble" href="/practice/" @click="closeMenu">
+          <a class="hamb__panel__visble" href="/AstroPractice/practice/" @click="closeMenu">
             <span class="hamb__panel__text">practice</span>
           </a>
         </li>
         <li class="hamb__panel">
-          <a class="hamb__panel__visble" href="/kikaku/" @click="closeMenu">
+          <a class="hamb__panel__visble" href="/AstroPractice/kikaku/" @click="closeMenu">
             <span class="hamb__panel__text">企画一覧</span>
           </a>
         </li>

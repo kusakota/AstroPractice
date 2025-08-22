@@ -35,7 +35,7 @@ const head: Props = {
     {news.length >= 1 ? (
       news.map((newsEntry) => (
         <li class="news__contents">
-          <a href={`/news/${newsEntry.id}/`}>{newsEntry.data.title}</a>
+          <a href={`/AstroPractice/news/${newsEntry.id}/`}>{newsEntry.data.title}</a>
           <div class="news__description">
             <p>{new Date(newsEntry.data.publishedDate).toLocaleDateString()}</p>
             <p>著者: {newsEntry.data.author}</p>
