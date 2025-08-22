@@ -4,7 +4,7 @@ import { faAngleRight, faHouse} from "@fortawesome/free-solid-svg-icons";
 import Layout from "../layouts/Layout.astro";
 import Typesetting from "../components/atoms/Typesetting.astro";
 import Sheet from "../components/molecules/sheet.vue";
-import NewBottomSheet from "../components/atoms/newBottomSheet.vue";
+import BottomSheet from "../components/atoms/BottomSheet.vue";
 ---
 <Layout 
 	title= "Sample Title",
@@ -32,13 +32,13 @@ import NewBottomSheet from "../components/atoms/newBottomSheet.vue";
 		<!-- 
     <Sheet client:load></Sheet>
 		-->
-		<NewBottomSheet client:load>
+		<BottomSheet client:load>
 			<ul>
 				<li>1</li>
 				<li>2</li>
 				<li>3</li>
 			</ul>
-		</NewBottomSheet>
+		</BottomSheet>
 	</section>
 	<FontAwesomeIcon icon={faHouse} />
 </Layout>
