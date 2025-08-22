@@ -8,13 +8,18 @@
           </a>
         </li>
         <li class="hamb__panel">
-          <a class="hamb__panel__visble" href="/practice/" @click="closeMenu">
-            <span class="hamb__panel__text">メニュー１</span>
+          <a class="hamb__panel__visble" href="/information/" @click="closeMenu">
+            <span class="hamb__panel__text">案内</span>
           </a>
         </li>
         <li class="hamb__panel">
           <a class="hamb__panel__visble" href="/practice/" @click="closeMenu">
-            <span class="hamb__panel__text">メニュー２</span>
+            <span class="hamb__panel__text">practice</span>
+          </a>
+        </li>
+        <li class="hamb__panel">
+          <a class="hamb__panel__visble" href="/kikaku/" @click="closeMenu">
+            <span class="hamb__panel__text">企画一覧</span>
           </a>
         </li>
       </ul> 

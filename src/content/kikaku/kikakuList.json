@@ -4,8 +4,8 @@
         "project_id": 2,
         "name": "俺が一番",
         "genre": "展示系",
-        "place": "K408",
-        "area": "講義棟",
+        "place": "１階",
+        "area": "日本",
         "date": "double"
     },
     {
@@ -13,8 +13,8 @@
         "project_id": 3,
         "name": "プログラミングをやりたい！",
         "genre": "学術系",
-        "place": "K505",
-        "area": "講義棟",
+        "place": "１階",
+        "area": "日本",
         "date": "day1"
     },
     {
@@ -22,8 +22,8 @@
         "project_id": 4,
         "name": "UI/UXを一緒に学ぼう！",
         "genre": "学術系",
-        "place": "K410",
-        "area": "講義棟",
+        "place": "2階",
+        "area": "日本",
         "date": "double"
     },
     {
@@ -31,8 +31,8 @@
         "project_id": 5,
         "name": "CSS理解した",
         "genre": "展示系",
-        "place": "K304",
-        "area": "講義棟",
+        "place": "１階",
+        "area": "日本",
         "date": "day2"
     }
 ]
