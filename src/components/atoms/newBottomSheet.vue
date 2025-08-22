@@ -2,14 +2,14 @@
 import { ref } from 'vue';
 
 // シートデフォルトの垂直位置
-const scrollY = ref(-800);
+const scrollY = ref(500);
 // ドラッグ中の状態
 let startY = 0;
 let baseY = scrollY.value;
 let isDragging = false;
 
-const maxScrollY = 65;
-const minScrollY = -1100;
+const maxScrollY = 1190;
+const minScrollY = 10;
 
 /**
  * onTouchStart: トッチドラッグ開始ハンドラ
@@ -35,7 +35,9 @@ function onTouchStart(event) {
  */
 function onTouchMove(event) {
   if (!isDragging) return;
-  scrollY.value = baseY + (event.touches[0].clientY - startY);
+  const newY = baseY + (event.touches[0].clientY - startY);
+  // ドラッグ中に下限を下回らないようクランプ
+  scrollY.value = Math.max(minScrollY, newY);
 }
 
 /**
@@ -74,7 +76,9 @@ function onMouseDown(event) {
  */
 function onMouseMove(event) {
   if (!isDragging) return;
-  scrollY.value = baseY + (event.clientY - startY);
+  const newY = baseY + (event.clientY - startY);
+  // ドラッグ中に下限を下回らないようクランプ
+  scrollY.value = Math.max(minScrollY, newY);
 }
 
 /**
@@ -115,7 +119,9 @@ function onPointerDown(event) {
  */
 function onPointerMove(event) {
   if (!isDragging) return;
-  scrollY.value = baseY + (event.clientY - startY);
+  const newY = baseY + (event.clientY - startY);
+  // ドラッグ中に下限を下回らないようクランプ
+  scrollY.value = Math.max(minScrollY, newY);
 }
 
 /**
@@ -146,6 +152,7 @@ function onPointerUp() {
 <style lang="scss" scoped>
 .bottom-sheet{
   &__wrapper {
+    height: calc(100vh - 60px);
     position: fixed;
     bottom: 0;
     left: 0;
