@@ -1,15 +1,21 @@
-<script setup>
-import { ref } from 'vue';
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
 
 // シートデフォルトの垂直位置
-const scrollY = ref(500);
+const scrollY = ref(300);
+let maxScrollY:number; //ボトムシートの下限
+
+onMounted(() =>{
+  let vh = window.innerHeight;
+  maxScrollY = vh - 120;
+})
+
 // ドラッグ中の状態
 let startY = 0;
 let baseY = scrollY.value;
 let isDragging = false;
 
-const maxScrollY = 1190;
-const minScrollY = 10;
+const minScrollY = 0;
 
 /**
  * onTouchStart: トッチドラッグ開始ハンドラ
@@ -19,10 +25,12 @@ const minScrollY = 10;
  * - touchmove と touchend リスナを登録
  * @param {TouchEvent} event - タッチ開始イベント
  */
-function onTouchStart(event) {
+function onTouchStart(event:TouchEvent) {
   isDragging = true;
   startY = event.touches[0].clientY;
   baseY = scrollY.value;
+  // ページスクロールをロック
+  document.body.style.overflow = 'hidden';
   document.addEventListener('touchmove', onTouchMove);
   document.addEventListener('touchend', onTouchEnd);
 }
@@ -33,7 +41,7 @@ function onTouchStart(event) {
  * - 移動量（event.touches[0].clientY - startY）を計算し scrollY を更新
  * @param {TouchEvent} event - タッチ移動イベント
  */
-function onTouchMove(event) {
+function onTouchMove(event:TouchEvent) {
   if (!isDragging) return;
   const newY = baseY + (event.touches[0].clientY - startY);
   // ドラッグ中に下限を下回らないようクランプ
@@ -51,6 +59,8 @@ function onTouchEnd() {
   scrollY.value = Math.min(maxScrollY, Math.max(minScrollY, scrollY.value));
   document.removeEventListener('touchmove', onTouchMove);
   document.removeEventListener('touchend', onTouchEnd);
+  // ページスクロールを解除
+  document.body.style.overflow = '';
 }
 
 /**
@@ -60,10 +70,12 @@ function onTouchEnd() {
  * - mousemove と mouseup リスナを登録
  * @param {MouseEvent} event - マウスダウンイベント
  */
-function onMouseDown(event) {
+function onMouseDown(event:MouseEvent) {
   isDragging = true;
   startY = event.clientY;
   baseY = scrollY.value;
+  // ページスクロールをロック
+  document.body.style.overflow = 'hidden';
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
 }
@@ -74,7 +86,7 @@ function onMouseDown(event) {
  * - 移動量（event.clientY - startY）を計算し scrollY を更新
  * @param {MouseEvent} event - マウス移動イベント
  */
-function onMouseMove(event) {
+function onMouseMove(event:MouseEvent) {
   if (!isDragging) return;
   const newY = baseY + (event.clientY - startY);
   // ドラッグ中に下限を下回らないようクランプ
@@ -92,6 +104,8 @@ function onMouseUp() {
   scrollY.value = Math.min(maxScrollY, Math.max(minScrollY, scrollY.value));
   document.removeEventListener('mousemove', onMouseMove);
   document.removeEventListener('mouseup', onMouseUp);
+  // ページスクロールを解除
+  document.body.style.overflow = '';
 }
 // --- ポインターイベントによる統合ドラッグ ---
 /**
@@ -101,11 +115,13 @@ function onMouseUp() {
  * - pointermove と pointerup リスナを登録
  * @param {PointerEvent} event - ポインタ開始イベント
  */
-function onPointerDown(event) {
+function onPointerDown(event: PointerEvent) {
   event.preventDefault();
   isDragging = true;
   startY = event.clientY;
   baseY = scrollY.value;
+  // ページスクロールをロック
+  document.body.style.overflow = 'hidden';
   document.addEventListener('pointermove', onPointerMove);
   document.addEventListener('pointerup', onPointerUp);
 }
@@ -116,7 +132,7 @@ function onPointerDown(event) {
  * - 移動量（event.clientY - startY）を計算し scrollY を更新
  * @param {PointerEvent} event - ポインタ移動イベント
  */
-function onPointerMove(event) {
+function onPointerMove(event: PointerEvent) {
   if (!isDragging) return;
   const newY = baseY + (event.clientY - startY);
   // ドラッグ中に下限を下回らないようクランプ
@@ -134,11 +150,13 @@ function onPointerUp() {
   scrollY.value = Math.min(maxScrollY, Math.max(minScrollY, scrollY.value));
   document.removeEventListener('pointermove', onPointerMove);
   document.removeEventListener('pointerup', onPointerUp);
+  // ページスクロールを解除
+  document.body.style.overflow = '';
 }
 </script>
 
 <template>
-  <div class="bottom-sheet__wrapper shadow" :style="`transform: translate3d(0px, ${scrollY}px, 0px)`" @touchstart="onTouchStart" @mousedown="onMouseDown" @pointerdown="onPointerDown">
+  <div class="bottom-sheet__wrapper shadow" :style="`transform: translate(0px, ${scrollY}px)`" @touchstart="onTouchStart" @mousedown="onMouseDown" @pointerdown="onPointerDown">
       <div class="bottom-sheet__handle" >
         <div class="bottom-sheet__handle--bar" />
       </div>
@@ -151,7 +169,7 @@ function onPointerUp() {
 <style lang="scss" scoped>
 .bottom-sheet{
   &__wrapper {
-    height: calc(100vh - 60px);
+    height: calc(100dvh - 60px);
     position: fixed;
     bottom: 0;
     left: 0;
