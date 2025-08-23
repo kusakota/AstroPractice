@@ -6,8 +6,8 @@ const scrollY = ref(300);
 let maxScrollY:number; //ボトムシートの下限
 
 onMounted(() =>{
-  let vh = window.innerHeight
-  maxScrollY = vh - 120
+  let vh = window.innerHeight;
+  maxScrollY = vh - 120;
 })
 
 // ドラッグ中の状態
