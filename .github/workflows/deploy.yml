@@ -20,26 +20,26 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24 # 👈 プロジェクトに合わせて変更してください
+          node-version: 20 # 👈 プロジェクトに合わせて変更してください
           cache: 'yarn'
 
-      # sharpのためにlibvipsをインストールするステップ 👇
+      # sharpのためにlibvipsをインストール
       - name: Install libvips
         run: sudo apt-get update && sudo apt-get install -y libvips-dev
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      # このステップを追加 👇
+      # sharpをLinux環境で強制的に再ビルドする
       - name: Rebuild sharp
         run: npm rebuild sharp
+
       - name: Build with Astro
         run: yarn run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Astroのビルド出力ディレクトリ (通常は 'dist')
           path: ./dist
 
   deploy:
