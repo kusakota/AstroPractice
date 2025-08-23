@@ -31,7 +31,7 @@ function onTouchStart(event:TouchEvent) {
   baseY = scrollY.value;
   // ページスクロールをロック
   document.body.style.overflow = 'hidden';
-  document.addEventListener('touchmove', onTouchMove);
+  document.addEventListener('touchmove', onTouchMove, { passive: false });
   document.addEventListener('touchend', onTouchEnd);
 }
 
@@ -43,6 +43,8 @@ function onTouchStart(event:TouchEvent) {
  */
 function onTouchMove(event:TouchEvent) {
   if (!isDragging) return;
+  // プルリフレッシュを抑制
+  event.preventDefault();
   const newY = baseY + (event.touches[0].clientY - startY);
   // ドラッグ中に下限を下回らないようクランプ
   scrollY.value = Math.max(minScrollY, newY);
@@ -122,7 +124,7 @@ function onPointerDown(event: PointerEvent) {
   baseY = scrollY.value;
   // ページスクロールをロック
   document.body.style.overflow = 'hidden';
-  document.addEventListener('pointermove', onPointerMove);
+  document.addEventListener('pointermove', onPointerMove, { passive: false });
   document.addEventListener('pointerup', onPointerUp);
 }
 
@@ -134,6 +136,8 @@ function onPointerDown(event: PointerEvent) {
  */
 function onPointerMove(event: PointerEvent) {
   if (!isDragging) return;
+  // プルリフレッシュを抑制
+  event.preventDefault();
   const newY = baseY + (event.clientY - startY);
   // ドラッグ中に下限を下回らないようクランプ
   scrollY.value = Math.max(minScrollY, newY);
