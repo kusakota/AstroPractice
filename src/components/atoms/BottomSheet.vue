@@ -1,15 +1,15 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 // シートデフォルトの垂直位置
-const scrollY = ref(500);
+const scrollY = ref(300);
 // ドラッグ中の状態
 let startY = 0;
 let baseY = scrollY.value;
 let isDragging = false;
 
-const maxScrollY = 1190;
-const minScrollY = 10;
+const maxScrollY = ref(1100);
+const minScrollY = ref(10);
 
 /**
  * onTouchStart: トッチドラッグ開始ハンドラ
@@ -23,6 +23,8 @@ function onTouchStart(event) {
   isDragging = true;
   startY = event.touches[0].clientY;
   baseY = scrollY.value;
+  // ページスクロールをロック
+  document.body.style.overflow = 'hidden';
   document.addEventListener('touchmove', onTouchMove);
   document.addEventListener('touchend', onTouchEnd);
 }
@@ -37,7 +39,7 @@ function onTouchMove(event) {
   if (!isDragging) return;
   const newY = baseY + (event.touches[0].clientY - startY);
   // ドラッグ中に下限を下回らないようクランプ
-  scrollY.value = Math.max(minScrollY, newY);
+  scrollY.value = Math.max(minScrollY.value, newY);
 }
 
 /**
@@ -48,9 +50,11 @@ function onTouchMove(event) {
 function onTouchEnd() {
   isDragging = false;
   // ドラッグ終了時にスクロール位置を範囲内にクランプ
-  scrollY.value = Math.min(maxScrollY, Math.max(minScrollY, scrollY.value));
+  scrollY.value = Math.min(maxScrollY.value, Math.max(minScrollY.value, scrollY.value));
   document.removeEventListener('touchmove', onTouchMove);
   document.removeEventListener('touchend', onTouchEnd);
+  // ページスクロールを解除
+  document.body.style.overflow = '';
 }
 
 /**
@@ -64,6 +68,8 @@ function onMouseDown(event) {
   isDragging = true;
   startY = event.clientY;
   baseY = scrollY.value;
+  // ページスクロールをロック
+  document.body.style.overflow = 'hidden';
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
 }
@@ -78,7 +84,7 @@ function onMouseMove(event) {
   if (!isDragging) return;
   const newY = baseY + (event.clientY - startY);
   // ドラッグ中に下限を下回らないようクランプ
-  scrollY.value = Math.max(minScrollY, newY);
+  scrollY.value = Math.max(minScrollY.value, newY);
 }
 
 /**
@@ -89,9 +95,11 @@ function onMouseMove(event) {
 function onMouseUp() {
   isDragging = false;
   // ドラッグ終了時にスクロール位置を範囲内にクランプ
-  scrollY.value = Math.min(maxScrollY, Math.max(minScrollY, scrollY.value));
+  scrollY.value = Math.min(maxScrollY.value, Math.max(minScrollY.value, scrollY.value));
   document.removeEventListener('mousemove', onMouseMove);
   document.removeEventListener('mouseup', onMouseUp);
+  // ページスクロールを解除
+  document.body.style.overflow = '';
 }
 // --- ポインターイベントによる統合ドラッグ ---
 /**
@@ -106,6 +114,8 @@ function onPointerDown(event) {
   isDragging = true;
   startY = event.clientY;
   baseY = scrollY.value;
+  // ページスクロールをロック
+  document.body.style.overflow = 'hidden';
   document.addEventListener('pointermove', onPointerMove);
   document.addEventListener('pointerup', onPointerUp);
 }
@@ -120,7 +130,7 @@ function onPointerMove(event) {
   if (!isDragging) return;
   const newY = baseY + (event.clientY - startY);
   // ドラッグ中に下限を下回らないようクランプ
-  scrollY.value = Math.max(minScrollY, newY);
+  scrollY.value = Math.max(minScrollY.value, newY);
 }
 
 /**
@@ -131,9 +141,11 @@ function onPointerMove(event) {
 function onPointerUp() {
   isDragging = false;
   // ドラッグ終了時にスクロール位置を範囲内にクランプ
-  scrollY.value = Math.min(maxScrollY, Math.max(minScrollY, scrollY.value));
+  scrollY.value = Math.min(maxScrollY.value, Math.max(minScrollY.value, scrollY.value));
   document.removeEventListener('pointermove', onPointerMove);
   document.removeEventListener('pointerup', onPointerUp);
+  // ページスクロールを解除
+  document.body.style.overflow = '';
 }
 </script>
 
