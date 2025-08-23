@@ -30,6 +30,9 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      # このステップを追加 👇
+      - name: Rebuild sharp
+        run: npm rebuild sharp
       - name: Build with Astro
         run: yarn run build
 
