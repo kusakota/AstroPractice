@@ -14,7 +14,7 @@ export default defineConfig({
                 }
             }
         },
-        plugins: [arraybuffer()],
+        plugins: [arraybuffer() as any],
     },
     trailingSlash: 'always',
     integrations: [
